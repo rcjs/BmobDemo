@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="rcjs.com.bmobdemo.MainActivity">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="添加单条信息" />
+
+        <Button
+            android:id="@+id/add_ml"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="批量添加信息" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="删除信息" />
+
+        <Button
+            android:id="@+id/delete_ml"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="删除信息" />
+
+        <TextView
+            android:id="@+id/search_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="查询单条密码" />
+
+        <Button
+            android:id="@+id/search_sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="查询单条信息" />
+
+
+        <ListView
+            android:id="@+id/search_lv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="查询多条结果" />
+
+        <Button
+            android:id="@+id/search_ml"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="查询多条信息" />
+
+        <EditText
+            android:id="@+id/update_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="修改姓名" />
+
+        <EditText
+            android:id="@+id/update_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="修改密码" />
+
+        <Button
+            android:id="@+id/update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="修改信息" />
+
+        <Button
+            android:id="@+id/update_ml"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="批量修改信息" />
+
+
+        <EditText
+            android:id="@+id/login_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="登录姓名" />
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="登录密码" />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="登录" />
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>
