@@ -1,5 +1,6 @@
 package rcjs.com.bmobdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,8 +12,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +31,6 @@ import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListListener;
-import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -63,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
     Button updateMl;
     @BindView(R.id.delete_ml)
     Button deleteMl;
+    @BindView(R.id.third_party_login)
+    Button thirdPartyLogin;
     private Person p2;
     private ListAdapter adapter;
 
@@ -93,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.add, R.id.delete, R.id.update, R.id.login, R.id.search_sp, R.id.search_ml, R.id.add_ml, R.id.update_ml, R.id.delete_ml})
+    @OnClick({R.id.add, R.id.delete, R.id.update, R.id.login, R.id.search_sp, R.id.search_ml, R.id.add_ml, R.id.update_ml, R.id.delete_ml,R.id.third_party_login})
     public void onClick(View view) {
         switch (view.getId()) {
             //单条添加
@@ -145,14 +152,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.search_sp:
                 //查找Person表里面id为6b6c11c537的数据
                 BmobQuery<Person> bmobQuery = new BmobQuery<Person>();
-                bmobQuery.addWhereEqualTo("name","rcjs");
-                bmobQuery.findObjects( new FindListener<Person>() {
+                bmobQuery.addWhereEqualTo("name", "rcjs");
+                bmobQuery.findObjects(new FindListener<Person>() {
 
                     @Override
                     public void done(List<Person> list, BmobException e) {
                         if (e == null) {
                             Toast.makeText(MainActivity.this, "查询成功", Toast.LENGTH_SHORT).show();
-                            searchTv.setText(list.size()+"条");
+                            searchTv.setText(list.size() + "条");
                         } else {
                             Toast.makeText(MainActivity.this, "查询失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -257,7 +264,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.delete_ml:
 
 
-
                 BmobQuery<Person> query2 = new BmobQuery<Person>();
                 //查询name叫“rcjs”的数据
                 query2.addWhereEqualTo("name", "rcjs");
@@ -274,18 +280,18 @@ public class MainActivity extends AppCompatActivity {
 
                                 @Override
                                 public void done(List<BatchResult> o, BmobException e) {
-                                    if(e==null){
-                                        for(int i=0;i<o.size();i++){
+                                    if (e == null) {
+                                        for (int i = 0; i < o.size(); i++) {
                                             BatchResult result = o.get(i);
-                                            BmobException ex =result.getError();
-                                            if(ex==null){
-                                                Toast.makeText(MainActivity.this,"第"+i+"个数据批量删除成功", Toast.LENGTH_SHORT).show();
-                                            }else{
-                                                Toast.makeText(MainActivity.this,"第"+i+"个数据批量删除失败："+ex.getMessage()+","+ex.getErrorCode(), Toast.LENGTH_SHORT).show();
+                                            BmobException ex = result.getError();
+                                            if (ex == null) {
+                                                Toast.makeText(MainActivity.this, "第" + i + "个数据批量删除成功", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(MainActivity.this, "第" + i + "个数据批量删除失败：" + ex.getMessage() + "," + ex.getErrorCode(), Toast.LENGTH_SHORT).show();
                                             }
                                         }
-                                    }else{
-                                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    } else {
+                                        Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                                     }
                                 }
                             });
@@ -295,21 +301,58 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 break;
+            case R.id.third_party_login:
+
+                Intent authintent = new Intent(MainActivity.this,AuthActivity.class);
+                startActivity(authintent);
+
+               /* UMShareAPI mShareAPI = UMShareAPI.get( MainActivity.this );
+                mShareAPI.doOauthVerify(MainActivity.this, SHARE_MEDIA.QQ, umAuthListener);*/
+                break;
             case R.id.login:
-                default:
+            default:
                 break;
         }
     }
 
+
+    /*private UMAuthListener umAuthListener = new UMAuthListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            //授权开始的回调
+        }
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            Toast.makeText(getApplicationContext(), "Authorize succeed", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText( getApplicationContext(), "Authorize fail", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText( getApplicationContext(), "Authorize cancel", Toast.LENGTH_SHORT).show();
+        }
+    };*/
+
+
+
+
+
     private List<BmobObject> queryBeans = new ArrayList<BmobObject>();
+
     /**
      * 将子类集合转换为基类BmobObject集合
+     *
      * @param userBeanList
      * @return
      */
-    private List<BmobObject> convertUserToObject(List<Person> userBeanList){
+    private List<BmobObject> convertUserToObject(List<Person> userBeanList) {
         queryBeans.clear();
-        for(Person userBean: userBeanList){
+        for (Person userBean : userBeanList) {
             queryBeans.add(userBean);
         }
 

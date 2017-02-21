@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BmobDemo</string>
+
+    <string name="umeng_auth_title">授权</string>
 </resources>
